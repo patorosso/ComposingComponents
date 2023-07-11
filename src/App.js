@@ -13,6 +13,15 @@ class App extends Component {
     ],
   };
 
+  constructor() {
+    super();
+    console.log("App - Constructor");
+  }
+
+  componentDidMount() {
+    console.log("App - Mounted");
+  }
+
   handleIncrement = (counter) => {
     const counters = [...this.state.counters];
     const index = counters.indexOf(counter);
@@ -30,12 +39,21 @@ class App extends Component {
     this.setState({ counters });
   };
 
+  handleDecrease = (counter) => {
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter };
+    counters[index].value--;
+    this.setState({ counters });
+  };
+
   handleDelete = (counterId) => {
     const counters = this.state.counters.filter((x) => x.id !== counterId);
     this.setState({ counters }); // como key y value son el mismo (quizas nombre tambien?) puedo escribir eso en vez de counters : counters
   };
 
   render() {
+    console.log("App - Rendered");
     return (
       <React.Fragment>
         <NavBar totalCounters={this.state.counters.length} />
@@ -43,6 +61,7 @@ class App extends Component {
           counters={this.state.counters}
           onDelete={this.handleDelete}
           onIncrement={this.handleIncrement}
+          onDecrease={this.handleDecrease}
           onReset={this.handleReset}
         />
       </React.Fragment>
